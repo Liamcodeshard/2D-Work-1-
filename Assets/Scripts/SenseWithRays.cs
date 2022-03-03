@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class SenseWithRays : MonoBehaviour
-{
-
-    public enum MovementDirection
+  public enum MovementDirection
     {
         Up = 0,
         Right = 1,
         Down = 2,
         Left = 3
     }
+public class SenseWithRays : MonoBehaviour
+{
+
+  
 
     [Range(2, 10)]
     public int accuracyLevel = 3;
@@ -30,13 +30,14 @@ public class SenseWithRays : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+  /*  void Update()
     {
-        ThrowRays(MovementDirection.Up, rayDistance);
-        ThrowRays(MovementDirection.Right, rayDistance);
-        ThrowRays(MovementDirection.Down, rayDistance);
-        ThrowRays(MovementDirection.Left, rayDistance);
+       ThrowRays(MovementDirection.Up, rayDistance);
+       ThrowRays(MovementDirection.Right, rayDistance);
+       ThrowRays(MovementDirection.Down, rayDistance);
+       ThrowRays(MovementDirection.Left, rayDistance);
     }
+*/
     public bool ThrowRays(MovementDirection whichWay, float rayDistance)
     {
 
@@ -71,8 +72,8 @@ public class SenseWithRays : MonoBehaviour
                 Debug.Log(rayResult.collider.name);
                 result = true;                                  // 14. move #9 into the for loop. //?// 
                                                                 //15. then create an if statement that says if one returns back as true then it is true.
+                break;
             }
-
         }
 
         return result;
