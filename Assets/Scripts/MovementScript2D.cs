@@ -9,78 +9,78 @@ public class MovementScript2D : MonoBehaviour
     public float gravity;
     public float jumpTime;
     public float jumpSpeed;
-   //
+    public AnimationCurve gravityCurve;
+   
    //public float jumpApex;
-  
+   //FULL RECAP OF JUMP AT 1:38 
    
 
-    Vector2 currentWantedMovement;
     bool weAreJumping;
     float timeSinceJumped;
+    bool isGrounded;
 
     private void Start()
     {
-        weAreJumping = false;
+       // weAreJumping = false;
     }
 
     void Update()
-    {
-        UpdateInput();
+    { 
         UpdateHorizontalMovement();
         UpdateVerticalMovement();
     }
-    void UpdateInput()
+    
+    void UpdateHorizontalMovement() // TAKES FROM THE UPDATE AND TAKES THE INPUT TO GIVE A NEW VECTOR TO BE TRANSFORMED INTO HORIZONTAL MOVEMENT 
     {
-        
-
- 
+        float currentMovement = 0f;
+        if (Input.GetKey(KeyCode.RightArrow)) currentMovement++;
+        if (Input.GetKey(KeyCode.LeftArrow)) currentMovement--;
+        HorizontalMove(speed * currentMovement * Time.deltaTime);    
     }
-    void UpdateHorizontalMovement()
-    {
-        currentWantedMovement = Vector2.zero;
-        if (Input.GetKey(KeyCode.RightArrow)) currentWantedMovement.x++;
-        if (Input.GetKey(KeyCode.LeftArrow)) currentWantedMovement.x--;
-
-        HorizontalMove(speed * currentWantedMovement.x * Time.deltaTime);    
-    }
-   void UpdateVerticalMovement()
+    void UpdateVerticalMovement()
     {
         float currentVerticalMovement = 0f;
-        if (weAreJumping)
+        if (weAreJumping) //going up
         {
-            currentVerticalMovement = jumpSpeed;
+            currentVerticalMovement = jumpSpeed; // apply jump speed
         }
-        else
+        else // going down
         {
             currentVerticalMovement = gravity * -1.0f;
         }
-        // UpdateJump();
-        VerticalMove(-1.0f * gravity * Time.deltaTime);
+        
+        VerticalMove(currentVerticalMovement * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             JumpStart();
+           
         }
 
        JumpUpdate();
-    }
+    }// TAKES FROM THE UPDATE AND TAKES THE INPUT TO GIVE A NEW VECTOR TO BE TRANSFORMED INTO VERTICAL MOVEMENT 
 
     void JumpStart()
     {
+        if (!isGrounded) return;
+        
+        isGrounded = false;
         weAreJumping = true;
         timeSinceJumped = 0f;
-    }
+      
+    } // TAKES FROM VERTICAL MOVEMENT. STARTS THE JUMP AND CHANGES SOME BOOLEAN VALUES
 
-   void JumpUpdate()
+    void JumpUpdate() // TAKES FROM VERTICAL MOVEMENT AND ENSURES THE JUMP IS NOT TOO LONG
     {
-        if (weAreJumping)
-        {
-            timeSinceJumped += Time.deltaTime;
-            if (timeSinceJumped > jumpTime)
-            {
-                weAreJumping = false;
-            }
-        }      
+       if (!weAreJumping) return;
+        
+ 
+       timeSinceJumped += Time.deltaTime;
+       if (timeSinceJumped > jumpTime)
+       {
+           weAreJumping = false;
+       }
+             
     }
   
     public void Move(Vector2 totalMovement)
@@ -104,7 +104,7 @@ public class MovementScript2D : MonoBehaviour
         {
             transform.Translate(Vector3.right * distance);
         }
-    }
+    } // TAKES FROM UPDATEHORIZONTALMOVEMENT AND TRANSFORMS THE MOVEMENT
     public void VerticalMove(float distance)
     {
         if (distance == 0)
@@ -117,7 +117,18 @@ public class MovementScript2D : MonoBehaviour
 
         bool weAreColliding = raycaster.ThrowRays(dir, distance);
         if (!weAreColliding)
-            transform.Translate(Vector3.up * distance);
-    }
+        {
+           transform.Translate(Vector3.up * distance);
+           if (dir == MovementDirection.Down)
+            {
+                isGrounded = false;
+            }
+        }
+        else if (dir == MovementDirection.Down)
+        {
+            weAreJumping = false;
+            isGrounded = true;
+        }
+    } // TAKES FROM UYPDATEVERTICALMOVEMENT AND TRANSFORMS IT INTO UPWARDS/JUMP MOVEMENT
 
 }

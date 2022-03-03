@@ -71,7 +71,7 @@ public class SenseWithRays : MonoBehaviour
             if (rayResult.collider != null)                   // 9. ##original code [result = (rayResult.collider != null)]here the result will be filled as true always if the ray DOES NOT RETURN NOTHING. 
                                                               // it will later be moved into the FOR loop then changed into an IF statement (as it cannot stay in the for loop or it will only return the LAST ray) (#14) - move into for loop
             {
-              //  Debug.Log(rayResult.collider.name);
+                Debug.Log(rayResult.collider.name);
                 result = true;                                  // 14. move #9 into the for loop. //?// 
                                                                 //15. then create an if statement that says if one returns back as true then it is true.
                 break;
