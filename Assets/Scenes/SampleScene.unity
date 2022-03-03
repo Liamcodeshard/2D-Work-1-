@@ -429,7 +429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 236803684}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.30999994, y: 2, z: 0}
+  m_LocalPosition: {x: 5.69, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 519420032}
@@ -453,9 +453,10 @@ MonoBehaviour:
   rayDistance: 1
   affectedLayer:
     serializedVersion: 2
-    m_Bits: 51
-  skinWidth: 0.003
-  extraDistanceRatioFromCorners: 0.002
+    m_Bits: 4294967295
+  skinWidth: 0.051
+  extraDistanceRatioFromCorners: 0.059
+  direction: 0
 --- !u!114 &236803690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,9 +472,8 @@ MonoBehaviour:
   raycaster: {fileID: 236803689}
   speed: 10
   gravity: 0
-  jumpApex: 0
-  jumpSpeed: 0
   jumpTime: 0
+  jumpSpeed: 0
 --- !u!1 &336167392
 GameObject:
   m_ObjectHideFlags: 0

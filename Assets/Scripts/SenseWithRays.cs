@@ -11,7 +11,7 @@ using UnityEngine;
 public class SenseWithRays : MonoBehaviour
 {
 
-  
+   // serialize field **REsearch
 
     [Range(2, 10)]
     public int accuracyLevel = 3;
@@ -22,6 +22,7 @@ public class SenseWithRays : MonoBehaviour
     public float skinWidth = 0.02f; // use to put the rays outside the collider
     [Range(0f, 1f)]
     public float extraDistanceRatioFromCorners = 0.01f;
+    public MovementDirection direction;
 
     // Start is called before the first frame update
     void Start()
@@ -30,14 +31,15 @@ public class SenseWithRays : MonoBehaviour
     }
 
     // Update is called once per frame
-  /*  void Update()
+   void Update()
     {
-       ThrowRays(MovementDirection.Up, rayDistance);
-       ThrowRays(MovementDirection.Right, rayDistance);
-       ThrowRays(MovementDirection.Down, rayDistance);
-       ThrowRays(MovementDirection.Left, rayDistance);
+        ThrowRays(direction, rayDistance);
+      // ThrowRays(MovementDirection.Up, rayDistance);
+      // ThrowRays(MovementDirection.Right, rayDistance);
+     //  ThrowRays(MovementDirection.Down, rayDistance);
+     //  ThrowRays(MovementDirection.Left, rayDistance);
     }
-*/
+
     public bool ThrowRays(MovementDirection whichWay, float rayDistance)
     {
 
@@ -69,7 +71,7 @@ public class SenseWithRays : MonoBehaviour
             if (rayResult.collider != null)                   // 9. ##original code [result = (rayResult.collider != null)]here the result will be filled as true always if the ray DOES NOT RETURN NOTHING. 
                                                               // it will later be moved into the FOR loop then changed into an IF statement (as it cannot stay in the for loop or it will only return the LAST ray) (#14) - move into for loop
             {
-                Debug.Log(rayResult.collider.name);
+              //  Debug.Log(rayResult.collider.name);
                 result = true;                                  // 14. move #9 into the for loop. //?// 
                                                                 //15. then create an if statement that says if one returns back as true then it is true.
                 break;

@@ -7,12 +7,21 @@ public class MovementScript2D : MonoBehaviour
     public SenseWithRays raycaster;
     public float speed;
     public float gravity;
-    public float jumpApex;
-    public float jumpSpeed;
     public float jumpTime;
+    public float jumpSpeed;
+   //
+   //public float jumpApex;
+  
    
 
     Vector2 currentWantedMovement;
+    bool weAreJumping;
+    float timeSinceJumped;
+
+    private void Start()
+    {
+        weAreJumping = false;
+    }
 
     void Update()
     {
@@ -31,13 +40,49 @@ public class MovementScript2D : MonoBehaviour
         currentWantedMovement = Vector2.zero;
         if (Input.GetKey(KeyCode.RightArrow)) currentWantedMovement.x++;
         if (Input.GetKey(KeyCode.LeftArrow)) currentWantedMovement.x--;
+
         HorizontalMove(speed * currentWantedMovement.x * Time.deltaTime);    
     }
-    void UpdateVerticalMovement()
+   void UpdateVerticalMovement()
     {
+        float currentVerticalMovement = 0f;
+        if (weAreJumping)
+        {
+            currentVerticalMovement = jumpSpeed;
+        }
+        else
+        {
+            currentVerticalMovement = gravity * -1.0f;
+        }
+        // UpdateJump();
+        VerticalMove(-1.0f * gravity * Time.deltaTime);
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JumpStart();
+        }
+
+       JumpUpdate();
     }
-   
+
+    void JumpStart()
+    {
+        weAreJumping = true;
+        timeSinceJumped = 0f;
+    }
+
+   void JumpUpdate()
+    {
+        if (weAreJumping)
+        {
+            timeSinceJumped += Time.deltaTime;
+            if (timeSinceJumped > jumpTime)
+            {
+                weAreJumping = false;
+            }
+        }      
+    }
+  
     public void Move(Vector2 totalMovement)
     {
         HorizontalMove(totalMovement.x);
